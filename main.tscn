@@ -1,6 +1,7 @@
-[gd_scene load_steps=17 format=3 uid="uid://bt74mpdyisq36"]
+[gd_scene load_steps=18 format=3 uid="uid://bt74mpdyisq36"]
 
 [ext_resource type="Script" path="res://controller/mouse_controller.gd" id="1_o3l48"]
+[ext_resource type="Script" path="res://controller/selection_controller.gd" id="2_qmw85"]
 [ext_resource type="Script" path="res://controller/camera_controller.gd" id="2_t0fkr"]
 [ext_resource type="Script" path="res://controller/movement_controller.gd" id="3_7ebjg"]
 [ext_resource type="Texture2D" uid="uid://biolsr757ww5c" path="res://debug/tex_DebugGrid.svg" id="3_whkkt"]
@@ -49,13 +50,19 @@ size = Vector2(200, 200)
 
 [node name="World" type="Node"]
 
-[node name="MouseController" type="Node" parent="." node_paths=PackedStringArray("camera_controller")]
+[node name="MouseController" type="Node" parent="."]
 script = ExtResource("1_o3l48")
-camera_controller = NodePath("../CameraController")
 
 [node name="CameraController" type="Node" parent="." node_paths=PackedStringArray("current_camera")]
 script = ExtResource("2_t0fkr")
 current_camera = NodePath("../MainCamera")
+
+[node name="SelectionController" type="Node2D" parent="." node_paths=PackedStringArray("movement_controller", "camera_controller")]
+script = ExtResource("2_qmw85")
+movement_controller = NodePath("../MovementController")
+camera_controller = NodePath("../CameraController")
+
+[node name="UnitSelectionArea" type="Node3D" parent="SelectionController"]
 
 [node name="MovementController" type="Node" parent="." node_paths=PackedStringArray("delete_me")]
 script = ExtResource("3_7ebjg")
@@ -69,6 +76,7 @@ transform = Transform3D(-0.993961, -0.105692, 0.0295097, 0, 0.26892, 0.963163, -
 shadow_enabled = true
 
 [node name="Tank" type="CharacterBody3D" parent="." node_paths=PackedStringArray("movement_system")]
+collision_layer = 3
 script = ExtResource("4_3kaim")
 movement_system = NodePath("MovementSystem")
 
@@ -106,4 +114,6 @@ material_override = SubResource("StandardMaterial3D_rmewd")
 mesh = SubResource("PlaneMesh_c3omh")
 skeleton = NodePath("../../..")
 
+[connection signal="left_click_event" from="MouseController" to="SelectionController" method="_on_mouse_controller_left_click_event"]
+[connection signal="mouse_motion_event" from="MouseController" to="SelectionController" method="_on_mouse_controller_mouse_motion_event"]
 [connection signal="input_event" from="Level/Ground" to="MovementController" method="_on_ground_input_event"]
