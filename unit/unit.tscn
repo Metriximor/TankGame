@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://834fi7r7qtwm"]
+
+[ext_resource type="Script" path="res://unit/unit.gd" id="1_ui721"]
+[ext_resource type="Script" path="res://unit/movement_system.gd" id="2_8gwi6"]
+[ext_resource type="Script" path="res://unit/unit_screen_locator.gd" id="3_80s1m"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_mmclr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gt6ej"]
+albedo_color = Color(1, 0, 0, 1)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2m2x3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_146d7"]
+
+[node name="Tank" type="CharacterBody3D"]
+collision_layer = 3
+script = ExtResource("1_ui721")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_mmclr")
+skeleton = NodePath("")
+surface_material_override/0 = SubResource("StandardMaterial3D_gt6ej")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_2m2x3")
+
+[node name="MovementSystem" type="NavigationAgent3D" parent="."]
+path_height_offset = 0.5
+debug_enabled = true
+script = ExtResource("2_8gwi6")
+speed = 10.0
+
+[node name="UnitScreenLocator" type="StaticBody2D" parent="."]
+script = ExtResource("3_80s1m")
+
+[node name="LocatorShape" type="CollisionShape2D" parent="UnitScreenLocator"]
+shape = SubResource("RectangleShape2D_146d7")

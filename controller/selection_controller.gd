@@ -6,11 +6,13 @@ const near_far_margin = .1 # frustum near/far planes distance from camera near/f
 @export var movement_controller: MovementController
 @export var camera_controller: CameraController
 
-@onready var search_area: Node3D = $UnitSelectionArea
+@onready var area_2d: Area2D = $SelectionArea
+@onready var collision_shape_2d: CollisionShape2D = $SelectionArea/RectangleShape
 
 var dragging := false
 var drag_start := Vector2.ZERO
-var selected: Array[Dictionary] = []
+var selected: Array[Unit] = []
+var select_rect := RectangleShape2D.new()
 
 func _draw() -> void:
 	if dragging:
@@ -27,59 +29,25 @@ func _on_mouse_controller_left_click_event(event: InputEventMouseButton) -> void
 		drag_start = event.position
 		dragging = true
 	elif event.is_released():
-		drag_start = Vector2.ZERO
 		dragging = false
 		_make_selection(event.position)
-		
 		self.queue_redraw()
 
 
-func _on_mouse_controller_mouse_motion_event(event: InputEventMouseMotion) -> void:
+func _on_mouse_controller_mouse_motion_event(_event: InputEventMouseMotion) -> void:
 	if dragging:
 		self.queue_redraw()
 
 
 func _make_selection(drag_end: Vector2) -> void:
-	var space := search_area.get_world_3d().direct_space_state
-	var query := PhysicsShapeQueryParameters3D.new()
-	query.collision_mask = 2
-	query.shape = make_frustum_collision_mesh(Rect2(drag_start, drag_end))
-	selected = space.intersect_shape(query)
-	print(selected)
-
-func make_frustum_collision_mesh(rect: Rect2) -> ConvexPolygonShape3D:
-	# create a convex polygon collision shape
-	var shape = ConvexPolygonShape3D.new()
-	# project 4 corners of the rect to the camera near plane
-	var pnear = camera_controller.project_rect(
-		rect, 
-		camera_controller.current_camera.near + near_far_margin
-	)
-	# project 4 corners of the rect to the camera far plane
-	var pfar = camera_controller.project_rect(
-		rect,
-		camera_controller.current_camera.far - near_far_margin
-	)
-	# create a frustum mesh from 8 projected points (6 faces in total, with 2 triangles per face and 3 vertices per triangle)
-	
-	shape.points = PackedVector3Array([
-		# near face
-		pnear[0], pnear[1], pnear[2], 
-		pnear[1], pnear[2], pnear[3],
-		# far face
-		pfar[2], pfar[1], pfar[0],
-		pfar[2], pfar[0], pfar[3],
-		#top face
-		pnear[0], pfar[0], pfar[1],
-		pnear[0], pfar[1], pnear[1],
-		#bottom face
-		pfar[2], pfar[3], pnear[3],
-		pfar[2], pnear[3], pnear[2],
-		#left face
-		pnear[0], pnear[3], pfar[3],
-		pnear[0], pfar[3], pfar[0],
-		#right face
-		pnear[1], pfar[1], pfar[2],
-		pnear[1], pfar[2], pnear[2]
-	])
-	return shape
+	select_rect.extents = abs(drag_end - drag_start) / 2
+	collision_shape_2d.shape = select_rect
+	collision_shape_2d.transform.origin = (drag_end + drag_start) / 2
+	# Need to wait 2 frames because godot weirdness
+	# More info at https://reddit.com/r/godot/comments/178d9hz/area2d_get_overlapping_bodies_is_not_detecting/
+	await get_tree().process_frame
+	await get_tree().process_frame
+	selected.clear()
+	for item in area_2d.get_overlapping_bodies():
+		var screen_locator := item as UnitScreenLocator
+		selected.append(screen_locator.unit)
