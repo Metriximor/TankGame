@@ -32,7 +32,6 @@ path_height_offset = 0.5
 debug_enabled = true
 script = ExtResource("2_8gwi6")
 unit = NodePath("..")
-speed = 10.0
 
 [node name="UnitScreenLocator" type="StaticBody2D" parent="." node_paths=PackedStringArray("unit")]
 script = ExtResource("3_80s1m")
