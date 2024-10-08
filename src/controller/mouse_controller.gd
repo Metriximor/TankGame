@@ -6,6 +6,7 @@ signal mouse_motion_event(event: InputEventMouseMotion)
 signal left_click_event(event: InputEventMouseButton)
 signal right_click_event(event: InputEventMouseButton)
 
+
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		_handle_input_event_mouse_button(event)

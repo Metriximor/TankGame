@@ -1,10 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://bt74mpdyisq36"]
+[gd_scene load_steps=16 format=3 uid="uid://bt74mpdyisq36"]
 
 [ext_resource type="Script" path="res://src/controller/mouse_controller.gd" id="1_o3l48"]
 [ext_resource type="Script" path="res://src/controller/selection_controller.gd" id="2_qmw85"]
 [ext_resource type="Script" path="res://src/controller/camera_controller.gd" id="2_t0fkr"]
 [ext_resource type="Script" path="res://src/controller/movement_controller.gd" id="3_7ebjg"]
 [ext_resource type="Texture2D" uid="uid://biolsr757ww5c" path="res://debug/tex_DebugGrid.svg" id="3_whkkt"]
+[ext_resource type="Script" path="res://src/camera/rts_camera_component.gd" id="5_apr3w"]
 [ext_resource type="PackedScene" uid="uid://834fi7r7qtwm" path="res://src/unit/unit.tscn" id="5_imam8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2jm7l"]
@@ -75,6 +76,10 @@ shadow_enabled = true
 
 [node name="MainCamera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.258819, 0.965926, 0, -0.965926, 0.258819, -0.0823078, 12.3579, 5.28028)
+
+[node name="RTSCameraComponent" type="Node" parent="MainCamera" node_paths=PackedStringArray("camera")]
+script = ExtResource("5_apr3w")
+camera = NodePath("..")
 
 [node name="Level" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("NavigationMesh_oj8tx")
