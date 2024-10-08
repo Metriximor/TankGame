@@ -1,11 +1,11 @@
 [gd_scene load_steps=15 format=3 uid="uid://bt74mpdyisq36"]
 
-[ext_resource type="Script" path="res://controller/mouse_controller.gd" id="1_o3l48"]
-[ext_resource type="Script" path="res://controller/selection_controller.gd" id="2_qmw85"]
-[ext_resource type="Script" path="res://controller/camera_controller.gd" id="2_t0fkr"]
-[ext_resource type="Script" path="res://controller/movement_controller.gd" id="3_7ebjg"]
+[ext_resource type="Script" path="res://src/controller/mouse_controller.gd" id="1_o3l48"]
+[ext_resource type="Script" path="res://src/controller/selection_controller.gd" id="2_qmw85"]
+[ext_resource type="Script" path="res://src/controller/camera_controller.gd" id="2_t0fkr"]
+[ext_resource type="Script" path="res://src/controller/movement_controller.gd" id="3_7ebjg"]
 [ext_resource type="Texture2D" uid="uid://biolsr757ww5c" path="res://debug/tex_DebugGrid.svg" id="3_whkkt"]
-[ext_resource type="PackedScene" uid="uid://834fi7r7qtwm" path="res://unit/unit.tscn" id="5_imam8"]
+[ext_resource type="PackedScene" uid="uid://834fi7r7qtwm" path="res://src/unit/unit.tscn" id="5_imam8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2jm7l"]
 

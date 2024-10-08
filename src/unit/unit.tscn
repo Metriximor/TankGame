@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://834fi7r7qtwm"]
 
-[ext_resource type="Script" path="res://unit/unit.gd" id="1_ui721"]
-[ext_resource type="Script" path="res://unit/movement_component.gd" id="2_8gwi6"]
-[ext_resource type="Script" path="res://unit/unit_screen_locator.gd" id="3_80s1m"]
+[ext_resource type="Script" path="res://src/unit/unit.gd" id="1_ui721"]
+[ext_resource type="Script" path="res://src/unit/movement_component.gd" id="2_8gwi6"]
+[ext_resource type="Script" path="res://src/unit/unit_screen_locator.gd" id="3_80s1m"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mmclr"]
 
