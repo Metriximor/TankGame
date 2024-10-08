@@ -12,4 +12,4 @@ func _on_ground_input_event(
 	if not mouse_event.button_index == 2:
 		return
 	for unit in selection_controller.selected:
-		unit.movement_system.target_position = event_position
+		unit.movement_component.target_position = event_position

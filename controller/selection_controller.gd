@@ -48,6 +48,7 @@ func _make_selection(drag_end: Vector2) -> void:
 	await get_tree().process_frame
 	await get_tree().process_frame
 	selected.clear()
+	print(area_2d.get_overlapping_bodies())
 	for item in area_2d.get_overlapping_bodies():
 		var screen_locator := item as UnitScreenLocator
 		selected.append(screen_locator.unit)

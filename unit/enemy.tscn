@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://bafyp1akffbw7"]
 
 [ext_resource type="Script" path="res://unit/unit.gd" id="1_d1u26"]
-[ext_resource type="Script" path="res://unit/movement_system.gd" id="2_8jnvd"]
+[ext_resource type="Script" path="res://unit/movement_component.gd" id="2_8jnvd"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_mmclr"]
 
