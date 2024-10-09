@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://834fi7r7qtwm"]
+[gd_scene load_steps=9 format=3 uid="uid://834fi7r7qtwm"]
 
 [ext_resource type="Script" path="res://src/unit/unit.gd" id="1_ui721"]
 [ext_resource type="Script" path="res://src/unit/movement_component.gd" id="2_8gwi6"]
@@ -10,6 +10,11 @@
 albedo_color = Color(1, 0, 0, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_2m2x3"]
+
+[sub_resource type="Curve" id="Curve_xbxn4"]
+max_value = 360.0
+_data = [Vector2(0, 360), 0.0, -885.871, 0, 0, Vector2(1, 30), -39.4384, 0.0, 0, 0]
+point_count = 2
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_146d7"]
 
@@ -32,6 +37,7 @@ path_height_offset = 0.5
 debug_enabled = true
 script = ExtResource("2_8gwi6")
 unit = NodePath("..")
+turning_radius = SubResource("Curve_xbxn4")
 
 [node name="UnitScreenLocator" type="StaticBody2D" parent="." node_paths=PackedStringArray("unit")]
 script = ExtResource("3_80s1m")

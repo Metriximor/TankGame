@@ -5,13 +5,17 @@ class_name MovementComponent
 @export_category("Component Parameters")
 @export var speed: float = 10.0
 @export var acceleration: float = 5.0
+@export var turning_radius: Curve
 
 
 func _physics_process(delta: float) -> void:
-	# TODO i'm not sure if normalizing here is a good idea, feels like I'm throwing
-	# away possible useful engine C++ code only to roll my own, please investigate further
-	var direction := calculate_direction(unit.global_position).normalized()
-	unit.velocity = unit.velocity.lerp(direction * speed, acceleration * delta)
+	var current_speed := unit.velocity.length()
+	var max_turning_angle := deg_to_rad(turning_radius.sample(speed / current_speed)) * 2
+	var current_direction := unit.velocity.normalized()
+	var desired_direction := calculate_direction(unit.global_position).normalized()
+	var actual_direction := current_direction.lerp(desired_direction, max_turning_angle)
+	
+	unit.velocity = unit.velocity.lerp(actual_direction * speed, acceleration * delta)
 	unit.move_and_slide()
 
 
